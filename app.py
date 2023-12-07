@@ -34,7 +34,7 @@ def get_vector_store(text_chunks):
 
 
 def get_conversation_chain(vector_store):
-    llm = ChatOpenAI(model_name="gpt-3.5-turbo", max_tokens=20)
+    llm = ChatOpenAI(model_name="gpt-3.5-turbo", max_tokens=120)
     memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
     conversation_chain = ConversationalRetrievalChain.from_llm(
         llm=llm,
@@ -81,7 +81,7 @@ def main():
         pdf_docs = st.file_uploader(
             "Upload your PDFs here and click on 'Process", accept_multiple_files=True
         )
-        if st.button("Process"):
+        if st.button("Process") and len(pdf_docs) > 0:
             with st.spinner("Processing your documents..."):
                 # get pdf text
                 raw_text = get_pdf_text(pdf_docs)
